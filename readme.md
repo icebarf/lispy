@@ -19,8 +19,10 @@ I have also provided compiled binaries for windows and linux as well So that you
 > must have any C compiler e.g GNU/GCC, Clang
 
 **Compilation**
-1. Place main.c mpc.c mpc.h in a single folder
-**or**
+Place main.c mpc.c mpc.h in a single folder 
+
+or
+
 ```git clone https://github.com/sysgrammar/byolisp_a.git
 
 cd byolisp_a```
