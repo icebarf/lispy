@@ -16,7 +16,7 @@ I have also provided compiled binaries for windows and linux as well So that you
 ### Current Progress
 
 - Able to get mathematical input in polish notation
-- Can perform the following mathematical opeartions
+- Can perform the following mathematical opeartions(non-decimal)
 - Addition
 - Subtraction
 - Multiplication
