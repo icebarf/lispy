@@ -7,11 +7,63 @@ This lisp is not meant for programming purposes but rather is a fun project of m
 
 The code used in this project is written by [Daniel Holden](https://github.com/orangeduck) which is present [on this webpage](https://github.com/orangeduck/BuildYourOwnLisp), this book has been very insightful and fun to read and I am enjoying reading it.
 
-Although you're free to use to this code is available under CC License, I am putting it under MIT License as it contains modifications and bonus project question code which is not written by Daniel Holden, anyway the project is in early stange and I am going to continue working on it slowly as I continue to explore the world of C.
-
 I have also provided compiled binaries for windows and linux as well So that you can try what I have currently done
+**[Download](https://github.com/sysgrammar/byolisp_a/releases)**
 
 > Note: I will fully release when I finish reading the book
+
+
+### Current Progress
+
+- Able to get mathematical input in polish notation
+- Can perform the following mathematical opeartions
+- Addition
+- Subtraction
+- Multiplication
+- Division & remainder
+- Power
+
+### Syntax
+
+**Addition**
+
+To `add` two numbers
+```byolisp_a> + 5 6```
+
+To add more than two numbers
+```byolisp_a> + 5 6 7 32 543```
+
+**Subtraction**
+
+To `sub` two numbers
+```byolisp_a> - 5 6```
+
+To sub more than two numbers
+```byolisp_a> - 543 32 7 5```
+
+**Multiplication**
+
+To `mul` two numbers
+```byolisp_a> * 5 6```
+
+To mul more than two numbers
+```byolisp_a> * 5 6 7 32 543```
+
+**Division(Quotient)**
+
+To `div` two numbers
+```byolisp_a> / 30 5```
+
+**Remainder**
+
+To find the `rem` of two numbers
+```byolisp_a> % 30 5```
+
+**Power**
+
+To find the `pow` of two numbers(Input base first and then the power to the base should be raised)
+```byolisp_a> ^ 5 6```
+
 
 ## Compile Instructions
 
@@ -44,15 +96,12 @@ Editline could be missing from your distro and it may not compile, therefore you
 
 ```sudo apt-get install liibedit-dev```
 
-please note that arch users will have to modify the `main.c` file as history.c and readline.c have their names changed and are in separate locations.
+Please note that arch users will have to modify the `main.c` file as history.c and readline.c have their names changed and are in separate locations.
 
-### Current Progress
-
-- Display the structure of input
-- Shows what type of input was entered
 
 ### Goals
 
 - Learn C
 - Learning how a language is made
 - Learning to write good code
+- Complete this project.
