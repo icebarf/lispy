@@ -7,7 +7,7 @@ This lisp is not meant for programming purposes but rather is a fun project of m
 
 My source of learning is [BuildYourOwnLISP by Daniel Holden](https://buildyourownlisp.com/)
 
-The code used in this project is written by mostly by [Daniel Holden](https://github.com/orangeduck) which is present [on this webpage](https://github.com/orangeduck/BuildYourOwnLisp), this book has been very insightful and fun to read and I am enjoying reading it.
+The book used in this project is written by [Daniel Holden](https://github.com/orangeduck), this book has been very insightful and fun to read and I am enjoying reading it.
 
 I have also provided compiled binaries for windows and linux as well So that you can try what I have currently done
 **[Download](https://github.com/sysgrammar/byolisp_a/releases)**
