@@ -30,11 +30,11 @@ or
     
 **Windows**
 
-```gcc -std=c99 -Wall main.c mpc.c -lm -o byolisp_a.-early-0.2```
+```gcc -std=c99 -Wall main.c mpc.c -lm -o byolisp_a```
 
 **GNU/Linux**
 
-```gcc -std=c99 -Wall main.c mpc.c -ledit -lm -o byolisp_a.-early-0.2```
+```gcc -std=c99 -Wall main.c mpc.c -ledit -lm -o byolisp_a```
 
 **NOTE(Linux users only)**
 

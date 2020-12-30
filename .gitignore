@@ -1,3 +1,6 @@
 # Ignore releases
 byolisp_a.-early-0.2
 byolisp_a.-early-0.2.exe
+mpc.c
+mpc.h
+.gitignore
