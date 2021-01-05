@@ -23,49 +23,109 @@ void add_history(char* unused) {}
 #include <editline/history.h>
 #endif
 
-/* Calculation performed in this function after evaluating opeartor string */
-long eval_op(long x, char* op, long y) {
-    if (strcmp(op, "+") == 0) { return x + y; }
-    if (strcmp(op, "add") == 0) { return x + y; }
-    
-    if (strcmp(op, "-") == 0) { return x - y; }
-    if (strcmp(op, "sub") == 0) { return x - y; }
-    
-    if (strcmp(op, "*") == 0) { return x * y; }
-    if (strcmp(op, "mul") == 0) { return x * y; }
+/* Creating enumerations of Possible LVAL Error types */
+enum { LERR_DIV_ZERO, LERR_BAD_OP, LERR_BAD_NUM };
 
-    if (strcmp(op, "/") == 0) { return x / y; }
-    if (strcmp(op, "div") == 0) { return x / y; }
+/* Creating enumerations of Possible LVAL Types */
+enum { LVAL_NUM, LVAL_ERR };
 
-    if (strcmp(op, "%") == 0) { return x % y; }
-    if (strcmp(op, "rem") == 0) { return x % y; }
+/* Creating a Lval Struct */
+typedef struct {
+    int type;
+    long num;
+    int err;
+} lval;
 
-    if (strcmp(op, "^") == 0) {
-                                double base = x;
-                                double power = y;
-                                double res = pow(base, power);
-                                return res; }
-    if (strcmp(op, "pow") == 0) { 
-                                double base = x;
-                                double power = y;
-                                double res = pow(base, power);
-                                return res;  }
-
-    return 0;
+/* Creating a new number of type lval */
+lval lval_num(long x) {
+    lval v;
+    v.type = LVAL_NUM;
+    v.num = x;
+    return v;
 }
 
-long eval(mpc_ast_t* t) {
+/* Creating a new error of type lval */
+lval lval_err(int x) {
+    lval v;
+    v.type = LVAL_ERR;
+    v.err = x;
+    return v;
+}
+
+/* Print a lval */
+void lval_print(lval v) {
+    switch(v.type) {
+        /* If we a number we print it and break out of the switch */
+        case LVAL_NUM: printf("%li", v.num); break;
+
+        /* In case we a number we do the following  */
+        case LVAL_ERR: 
+            /* Check error type and print it */
+            if (v.err == LERR_DIV_ZERO) {
+                printf("Lisp Error: Dividing by zero");
+            }
+            if (v.err == LERR_BAD_OP) {
+                printf("Lisp Error: Invalid Operator! Refer to documentation to see the list of opeartors");
+            }
+            if (v.err == LERR_BAD_NUM) {
+                printf("Lisp Error: Number is too large or input is not a number");
+            }
+        break;
+    }
+}
+
+/* Print an "lval" followed by a new line */
+void lval_println(lval v) { lval_print(v); putchar('\n');}
+
+/* Calculation performed in this function after evaluating opeartor string */
+lval eval_op(lval x, char* op, lval y) {
+
+    /* If either value is an error don't compute just return */
+    if (x.type == LVAL_ERR) {return x;}
+    if (y.type == LVAL_ERR) {return y;}
+
+    /* Otherwise perform the following opeartions */
+
+    if (strcmp(op, "+") == 0) { return lval_num(x.num + y.num); }
+    if (strcmp(op, "add") == 0) { return lval_num(x.num + y.num); }
+    
+    if (strcmp(op, "-") == 0) { return lval_num(x.num - y.num); }
+    if (strcmp(op, "sub") == 0) { return lval_num(x.num - y.num); }
+    
+    if (strcmp(op, "*") == 0) { return lval_num(x.num * y.num); }
+    if (strcmp(op, "mul") == 0) { return lval_num(x.num * y.num); }
+
+    if (strcmp(op, "/") == 0) { return y.num == 0 ? lval_err(LERR_DIV_ZERO) : lval_num(x.num / y.num); }
+    if (strcmp(op, "div") == 0) { return y.num == 0 ? lval_err(LERR_DIV_ZERO) : lval_num(x.num / y.num); }
+
+    if (strcmp(op, "%") == 0) { return y.num == 0 ? lval_err(LERR_DIV_ZERO) : lval_num(x.num % y.num); }
+    if (strcmp(op, "rem") == 0) { return y.num == 0 ? lval_err(LERR_DIV_ZERO) : lval_num(x.num % y.num); }
+
+    if (strcmp(op, "^") == 0) { return lval_num(pow(x.num, y.num)); }
+    if (strcmp(op, "pow") == 0) { return lval_num(pow(x.num, y.num)); }
+    
+    if (strcmp(op, "min") == 0) { return lval_num(fmin(x.num, y.num)); }
+    
+    if (strcmp(op, "max") == 0) { return lval_num(fmax(x.num, y.num)); }
+
+    return lval_err(LERR_BAD_OP);
+}
+
+lval eval(mpc_ast_t* t) {
     
     /* If tagged as number return it directly. */ 
     if (strstr(t->tag, "number")) {
-        return atoi(t->contents);
+        /* Check error for conversion */
+        errno = 0;
+        long x = strtol(t->contents, NULL, 10);
+        return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
     }
   
     /* The operator is always second child. */
     char* op = t->children[1]->contents;
-  
+
     /* We store the third child in `x` */
-    long x = eval(t->children[2]);
+    lval x = eval(t->children[2]);
   
     /* Iterate the remaining children and combining. */
     int i = 3;
@@ -87,11 +147,11 @@ int main(int argc, char** argv) {
 
     /* Defining the parser with the following */
     mpca_lang(MPCA_LANG_DEFAULT, 
-    "                                                                                                                              \
-    number          : /-?[0-9]+/;                                                                                         \
-    operator        : '+' | '-' | '*' | '/' | '%' | '^' | \"add\" | \"sub\" | \"mul\" | \"div\" | \"rem\" | \"pow\";               \
-    expr            : <number> | '(' <operator> <expr>+ ')';                                                                       \
-    byolisp         : /^/ <operator> <expr>+ /$/;                                                                                  \
+    "                                                                                                                                                   \
+    number          : /-?[0-9]+/;                                                                                                                       \
+    operator        : '+' | '-' | '*' | '/' | '%' | '^' | \"add\" | \"sub\" | \"mul\" | \"div\" | \"rem\" | \"pow\" | \"min\" | \"max\";                \
+    expr            : <number> | '(' <operator> <expr>+ ')';                                                                                            \
+    byolisp         : /^/ <operator> <expr>+ /$/;                                                                                                       \
     ",
     Number, Operator, Expr, Byolisp);
 
@@ -108,8 +168,8 @@ int main(int argc, char** argv) {
         mpc_result_t r;
         if (mpc_parse("<stdin>", input, Byolisp, &r)) {
       
-            long result = eval(r.output);
-            printf("%li\n", result);
+            lval result = eval(r.output);
+            lval_println(result);
             mpc_ast_delete(r.output);
       
         } else {    
