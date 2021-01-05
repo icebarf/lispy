@@ -156,7 +156,7 @@ int main(int argc, char** argv) {
     Number, Operator, Expr, Byolisp);
 
     /* version info */
-    puts("Byolisp version early-0.3");
+    puts("Byolisp version early-0.4");
     puts("Press CTRL + C to Exit");
     puts("Learning from https://buildyourownlisp.com\n");
 
