@@ -14,16 +14,24 @@ I have also provided compiled binaries for windows and linux as well So that you
 
 > Note: I will fully release when I finish reading the book
 
+## Changelog (Begun since version early-0.4)
+**Version `early-0.4`**
+- Added error handling to the LISP
+- Added two new opeartors: `min` and `max`
+- Improved code readability
+- Some cleanup and minor changes
 
 ### Current Progress
 
 - Able to get mathematical input in polish notation
+- Returns syntax, mathematical errors i.e Too large numbers, division by zero etc
 - Can perform the following mathematical opeartions(non-decimal)
 - Addition
 - Subtraction
 - Multiplication
 - Division & remainder
 - Power
+- Min/Max
 
 ### Syntax
 
@@ -63,8 +71,16 @@ To find the `rem` of two numbers
 
 **Power**
 
-To find the `pow` of two numbers(Input base first and then the power to the base should be raised)
+To find the `pow` of two numbers(Input base first and then the power to the base should be raised):
 ```byolisp_a> ^ 5 6```
+
+**Minimum**
+To return the `min` of two or more numbers entered:
+```byolisp_a> min 4 39```
+
+**Maximum**
+To return the `max` of two or more numbers entered:
+```byolisp_a> max 4 39```
 
 
 ## Compile Instructions
