@@ -21,7 +21,7 @@ I have also provided compiled binaries for windows and linux as well So that you
 - Improved code readability
 - Some cleanup and minor changes
 
-**Version `early-00.5`**
+**Version `early-0.5`**
 - Added support for decimal input
 - Added decimal calculations
 - Added Symbolic Expressions like in a Typical Lisp
