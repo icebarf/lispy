@@ -21,15 +21,21 @@ I have also provided compiled binaries for windows and linux as well So that you
 - Improved code readability
 - Some cleanup and minor changes
 
+**Version `early-00.5`**
+- Added support for decimal input
+- Added decimal calculations
+- Added Symbolic Expressions like in a Typical Lisp
+- Refactored Code
+
 ### Current Progress
 
 - Able to get mathematical input in polish notation
 - Returns syntax, mathematical errors i.e Too large numbers, division by zero etc
-- Can perform the following mathematical opeartions(non-decimal)
+- Can perform the following mathematical opeartions
 - Addition
 - Subtraction
 - Multiplication
-- Division & remainder
+- Division & remainder(modulus)
 - Power
 - Min/Max
 
