@@ -1,18 +1,18 @@
-# BYOLISP_A
 
-## Project Info
+# Project Info
 
 **This project is a work in progress LISP**
 This lisp is not meant for programming purposes but rather is a fun project of mine. I decided to write this as I wanted to learn C and do a fun project as well,
 
-My source of learning is [BuildYourOwnLISP by Daniel Holden](https://buildyourownlisp.com/)
+The book being used for learning and this project is [Build Your Own LISP by Daniel Holden](http://buildyourownlisp.com/)
 
-The book used in this project is written by [Daniel Holden](https://github.com/orangeduck), this book has been very insightful and fun to read and I am enjoying reading it.
+The book used in this project is written by [Daniel Holden](https://github.com/orangeduck), this book has been very insightful and fun to read and have taught me many things.
+I do recommend giving it a read even if you are not interested in writing a full lisp.
 
-I have also provided compiled binaries for windows and linux as well So that you can try what I have currently done
+I have also provided compiled binaries for windows and linux as well.
 **[Download](https://github.com/sysgrammar/byolisp_a/releases)**
 
-> Note: I will fully release when I finish reading the book
+> Note: A full 1.0 release will be out when I, the dev finishes reading the book.
 
 ## Changelog (Begun since version early-0.4)
 **Version `early-0.4`**
@@ -27,11 +27,18 @@ I have also provided compiled binaries for windows and linux as well So that you
 - Added Symbolic Expressions like in a Typical Lisp
 - Refactored Code
 
+**Version `early-0.5`**
+- Added Quoted Expressions
+- Added new functions for manipulation of Q-Expressions
+- Added macros for type and count checking for Q-Expression
+- Evaluation support for q-expressions
+
 ### Current Progress
 
-- Able to get mathematical input in polish notation
-- Returns syntax, mathematical errors i.e Too large numbers, division by zero etc
-- Can perform the following mathematical opeartions
+- Get mathematical input in polish notation
+- Has error handling
+
+**Can perform the following mathematical opeartions:**
 - Addition
 - Subtraction
 - Multiplication
@@ -39,7 +46,54 @@ I have also provided compiled binaries for windows and linux as well So that you
 - Power
 - Min/Max
 
+**Quoted Expression functions:**
+- list
+- head
+- tail
+- join
+- eval
+- cons
+- len
+- init
+
+## Compile Instructions
+
+**Pre-requisites**
+> must have any C compiler e.g GNU/GCC, Clang
+
+**Compilation**
+
+Place main.c mpc.c mpc.h in a single folder 
+
+or
+
+```git clone https://github.com/sysgrammar/byolisp_a.git```
+
+```cd byolisp_a```
+    
+**Windows**
+
+```gcc -std=c99 -Wall main.c mpc.c -lm -o byolisp_a```
+
+**GNU/Linux**
+
+```gcc -std=c99 -Wall main.c mpc.c -ledit -lm -o byolisp_a```
+
+**NOTE(Linux users only)**
+
+Editline could be missing from your distro and it may not compile, therefore you need to do this
+
+>This command is for apt package manager 
+
+```sudo apt-get install liibedit-dev```
+
+Please note that arch users will have to modify the `main.c` file as history.c and readline.c have their names changed and are in separate locations.
+
+
+
 ### Syntax
+
+#### Mathematical Operations:
 
 **Addition**
 
@@ -88,39 +142,39 @@ To return the `min` of two or more numbers entered:
 To return the `max` of two or more numbers entered:
 ```byolisp_a> max 4 39```
 
+#### Quoted Expressions:
 
-## Compile Instructions
+**List**
+Returns a quoted expression/list of normal numbers:
+```byolisp_a> list 1 2 3 4```
 
-**Pre-requisites**
-> must have any C compiler e.g GNU/GCC, Clang
+**Head**
+Returns first element of the q-expression/list:
+```byolisp_a> head {1 2 3 4}```
 
-**Compilation**
+**Tail**
+Returns the q-expression with the first element removed from it:
+```byolisp_a> tail {1 2 3 4}```
 
-Place main.c mpc.c mpc.h in a single folder 
+**Join**
+Takes two q-expressions/lists as input and joins them:
+```byolisp_a> join {1 2 3} {4 5 6}```
 
-or
+**Eval**
+Takes a Q-Expression and evaluates it as if it were a S-Expression:
+```byolisp_a> eval (tail {tail tail {5 6 7}})```
 
-```git clone https://github.com/sysgrammar/byolisp_a.git```
+**Cons**
+Takes a single value and a q-expression and appends the value to the front of q-expression:
+```byolisp_a> cons 1 {2 3}```
 
-```cd byolisp_a```
-    
-**Windows**
+**len**
+Returns the lenth of the list/q-expression:
+```byolisp_a> len {2 34 5 68}```
 
-```gcc -std=c99 -Wall main.c mpc.c -lm -o byolisp_a```
-
-**GNU/Linux**
-
-```gcc -std=c99 -Wall main.c mpc.c -ledit -lm -o byolisp_a```
-
-**NOTE(Linux users only)**
-
-Editline could be missing from your distro and it may not compile, therefore you need to do this
-
->This command is for apt package manager 
-
-```sudo apt-get install liibedit-dev```
-
-Please note that arch users will have to modify the `main.c` file as history.c and readline.c have their names changed and are in separate locations.
+**init**
+Returns the q-expression with last element removed from it:
+```byolisp_a> init {3 3 5 6 7}```
 
 
 ### Goals
