@@ -89,7 +89,11 @@ Editline could be missing from your distro and it may not compile, therefore you
 
 Please note that arch users will have to modify the `main.c` file as history.c and readline.c have their names changed and are in separate locations.
 
+**Termux (Mobile testing using CLang)**
+Remove ```#include <editline/history.h>``` from `main.c`.
 
+Then compile using:
+```clang -std=c99 -Wall main.c mpc.c -ledit -lm -o byolisp_a```
 
 ### Syntax
 
