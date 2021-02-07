@@ -184,6 +184,9 @@ void lval_println(lval* v) { lval_print(v); putchar('\n');}
 /* MACRO CODE FOR ERROR CHECKING IN BUILTIN FUNCS */
 #define LASSERT(args, cond, err) \
     if (!(cond)) { lval_del(args); return lval_err(err); }
+
+#define LASSERT_ARGS(args, sym, num)\
+    LASSERT(args, args->count sym num, "Function was passed too many arguments");
 /* MACRO END*/
 
 lval* lval_eval(lval* v);
@@ -196,8 +199,7 @@ lval* builtin_list(lval* a) {
 
 lval* builtin_head(lval* a) {
     /* Calling Error checking macro */
-    LASSERT(a, a->count == 1,
-     "Function 'head' passed too many arguments. ");
+    LASSERT_ARGS(a, ==, 1);
     LASSERT(a, a->cell[0]->type == LVAL_QEXPR,
      "Function 'head' was passed wrong type of argument i.e Not Quoted Expression");
     LASSERT(a, a->cell[0]->count != 0,
@@ -214,7 +216,7 @@ lval* builtin_head(lval* a) {
 
 lval* builtin_tail(lval* a ) {
     /* Calling Error checking macro */
-    LASSERT(a, a->count == 1, "Function 'tail' passed too many arguments. ");
+    LASSERT_ARGS(a, ==, 1);
     LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "Function 'tail' was passed wrong type of argument i.e Not Quoted Expression");
     LASSERT(a, a->cell[0]->count != 0, "Function 'tail' was passed empty argument {}");
 
@@ -228,7 +230,7 @@ lval* builtin_tail(lval* a ) {
 }
 
 lval* builtin_eval(lval* a) {
-    LASSERT(a, a->count == 1, "Function 'eval' was passed too many arguments");
+    LASSERT_ARGS(a, ==, 1);
     LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "Function 'eval' was passed incorrect type i.e not Quoted Expression. ");
 
     lval* x = lval_take(a, 0);
@@ -251,6 +253,54 @@ lval* builtin_join(lval* a) {
 
     lval_del(a);
     return x;
+}
+
+lval* builtin_cons(lval* a) {
+  /* Check input for error */
+    LASSERT(a, a->count == 2, "Function 'cons' was passsed more/less than two arguments. ");
+    LASSERT(a, a->cell[1]->type == LVAL_QEXPR, "The second argument should be a Q-Expression(LIST).");
+    LASSERT(a, a->cell[0]->type == LVAL_NUM, "The first argument must be a simple value and not a symbol or expression. ");
+
+    /*Creating new lvals and assigning vals */
+    lval* val = lval_qexpr();
+    val = lval_add(val, lval_pop(a, 0));
+    lval* rem_val = lval_pop(a, 0);
+    
+    
+    while(rem_val->count) {
+      val = lval_add(val, lval_pop(rem_val, 0));
+    }
+
+    lval_del(a); lval_del(rem_val);
+    return val;
+}
+
+lval* builtin_len(lval* a) {
+    LASSERT_ARGS(a, ==, 1);
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "Function was passed wrong type of argument, i.e. not q-expression. ");
+
+    /* Get count/no. of elements */
+    double count = a->cell[0]->count;
+
+    /* Return and convert to lisp value */
+    return lval_num(count);
+
+}
+
+lval* builtin_init(lval* a) {
+    LASSERT(a, a->count == 1, "Function was passed more than 1 argument. ");
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "Function 'init' was passed wrong type of argument i.e Not Quoted Expression");
+    LASSERT(a, a->cell[0]->count != 0, "Function 'init' was passed empty argument {}");
+
+    lval* val = lval_qexpr();
+    lval* val2 = lval_pop(a, 0);
+    
+    while(val2->count > 1) {
+      val = lval_add(val, lval_pop(val2, 0));
+    }
+
+    lval_del(a); lval_del(val2);
+    return val;
 }
 
 lval* builtin_op(lval* a, char* op) {
@@ -339,7 +389,10 @@ lval* builtin(lval* a, char* func) {
     if(strcmp("tail", func) == 0) { return builtin_tail(a); }
     if(strcmp("join", func) == 0) { return builtin_join(a); }
     if(strcmp("eval", func) == 0) { return builtin_eval(a); }
-    if(strstr("+-/*", func)) { return builtin_op(a, func); }
+    if(strcmp("cons", func) == 0) { return builtin_cons(a); }
+    if(strcmp("len", func)  == 0) { return builtin_len(a);  }
+    if(strcmp("init", func) == 0) { return builtin_init(a); }
+    if(strstr("+-/*%^addsubdivmulrempowminmax", func)) { return builtin_op(a, func); }
     lval_del(a);
     return lval_err("Unknown Function!");
 }
@@ -429,14 +482,14 @@ int main(int argc, char** argv) {
     /* Defining the parser with the following */
     mpca_lang(MPCA_LANG_DEFAULT, 
     "                                                                                                                                                   \
-    number          : /-?[0-9]+\\.?[0-9]?/ ;                                                                                                             \
+    number          : /-?[0-9]+\\.?[0-9]?/ ;                                                                                                            \
     symbol          : '+' | '-' | '*' | '/' | '%' | '^' |                                                                                               \
                       \"add\" | \"sub\" | \"mul\" | \"div\" | \"rem\" | \"pow\" | \"min\" | \"max\"                                                     \
-                    | \"list\" | \"head\" | \"tail\" | \"join\" | \"eval\" ;                                                                                                           \
+                    | \"list\" | \"head\" | \"tail\" | \"join\" | \"eval\" | \"cons\" | \"len\" | \"init\" ;                                            \
     sexpr           : '(' <expr>* ')' ;                                                                                                                 \
     qexpr           : '{' <expr>* '}' ;                                                                                                                 \
-    expr            : <number> | <symbol> | <sexpr> | <qexpr> ;                                                                                          \
-    byolisp         : /^/ <expr>* /$/ ;                                                                                                                  \
+    expr            : <number> | <symbol> | <sexpr> | <qexpr> ;                                                                                         \
+    byolisp         : /^/ <expr>* /$/ ;                                                                                                                 \
     ",
     Number, Symbol, Sexpr, Qexpr, Expr, Byolisp);
 

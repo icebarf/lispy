@@ -27,7 +27,7 @@ I have also provided compiled binaries for windows and linux as well.
 - Added Symbolic Expressions like in a Typical Lisp
 - Refactored Code
 
-**Version `early-0.5`**
+**Version `early-0.6`**
 - Added Quoted Expressions
 - Added new functions for manipulation of Q-Expressions
 - Added macros for type and count checking for Q-Expression
