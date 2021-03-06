@@ -15,11 +15,12 @@ I have also provided compiled binaries for windows and linux as well.
 > Note: A full 1.0 release will be out when I, the dev finishes reading the book.
 
 ## Changelog (Begun since version early-0.4)
-**Version `early-0.4`**
-- Added error handling to the LISP
-- Added two new opeartors: `min` and `max`
-- Improved code readability
-- Some cleanup and minor changes
+
+**Version `early-0.6`**
+- Added Quoted Expressions
+- Added new functions for manipulation of Q-Expressions
+- Added macros for type and count checking for Q-Expression
+- Evaluation support for q-expressions
 
 **Version `early-0.5`**
 - Added support for decimal input
@@ -27,11 +28,11 @@ I have also provided compiled binaries for windows and linux as well.
 - Added Symbolic Expressions like in a Typical Lisp
 - Refactored Code
 
-**Version `early-0.6`**
-- Added Quoted Expressions
-- Added new functions for manipulation of Q-Expressions
-- Added macros for type and count checking for Q-Expression
-- Evaluation support for q-expressions
+**Version `early-0.4`**
+- Added error handling to the LISP
+- Added two new opeartors: `min` and `max`
+- Improved code readability
+- Some cleanup and minor changes
 
 ### Current Progress
 
