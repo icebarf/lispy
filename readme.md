@@ -96,7 +96,7 @@ Remove ```#include <editline/history.h>``` from `main.c`.
 Then compile using:
 ```clang -std=c99 -Wall main.c mpc.c -ledit -lm -o byolisp_a```
 
-### Syntax
+# Syntax
 
 #### Mathematical Operations:
 
@@ -140,36 +140,44 @@ To find the `pow` of two numbers(Input base first and then the power to the base
 ```byolisp_a> ^ 5 6```
 
 **Minimum**
+
 To return the `min` of two or more numbers entered:
 ```byolisp_a> min 4 39```
 
 **Maximum**
+
 To return the `max` of two or more numbers entered:
 ```byolisp_a> max 4 39```
 
 #### Quoted Expressions:
 
 **List**
+
 Returns a quoted expression/list of normal numbers:
 ```byolisp_a> list 1 2 3 4```
 
 **Head**
+
 Returns first element of the q-expression/list:
 ```byolisp_a> head {1 2 3 4}```
 
 **Tail**
+
 Returns the q-expression with the first element removed from it:
 ```byolisp_a> tail {1 2 3 4}```
 
 **Join**
+
 Takes two q-expressions/lists as input and joins them:
 ```byolisp_a> join {1 2 3} {4 5 6}```
 
 **Eval**
+
 Takes a Q-Expression and evaluates it as if it were a S-Expression:
 ```byolisp_a> eval (tail {tail tail {5 6 7}})```
 
 **Cons**
+
 Takes a single value and a q-expression and appends the value to the front of q-expression:
 ```byolisp_a> cons 1 {2 3}```
 

@@ -20,26 +20,24 @@ void add_history(char* unused) {}
 #else
 /* For Linux */
 #include <editline/readline.h>
-#include <editline/history.h>
 #endif
 
 /* Creating enumerations of Possible LVAL Types */
 enum { LVAL_NUM, LVAL_ERR, LVAL_SYM, LVAL_SEXPR, LVAL_QEXPR };
 
-/* Creating a Lval Struct */
+
 typedef struct lval {
     int type;
     double num;
 
-    /* Error and symbol types will have strings as data */
     char* err;
     char* sym;
     
-    /* Count and pointer to a list of lval */
     int count;
     struct lval** cell;
 
 } lval;
+
 
 /* Creating a pointer to new number of type lval */
 lval* lval_num(double x) {
@@ -186,7 +184,10 @@ void lval_println(lval* v) { lval_print(v); putchar('\n');}
     if (!(cond)) { lval_del(args); return lval_err(err); }
 
 #define LASSERT_ARGS(args, sym, num)\
-    LASSERT(args, args->count sym num, "Function was passed too many arguments");
+    LASSERT(args, args->count sym num, "Function was passed too many arguments.");
+
+#define LASSERT_ELIST(args) \
+    LASSERT(args, args->count != 0, "Function was passed empty argument.")
 /* MACRO END*/
 
 lval* lval_eval(lval* v);
@@ -202,8 +203,7 @@ lval* builtin_head(lval* a) {
     LASSERT_ARGS(a, ==, 1);
     LASSERT(a, a->cell[0]->type == LVAL_QEXPR,
      "Function 'head' was passed wrong type of argument i.e Not Quoted Expression");
-    LASSERT(a, a->cell[0]->count != 0,
-     "Function 'head' was passed empty argument {}");
+    LASSERT_ELIST(a);
 
     /* If error checking successful, then do this: */
     /* Take the first argument */
@@ -218,7 +218,7 @@ lval* builtin_tail(lval* a ) {
     /* Calling Error checking macro */
     LASSERT_ARGS(a, ==, 1);
     LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "Function 'tail' was passed wrong type of argument i.e Not Quoted Expression");
-    LASSERT(a, a->cell[0]->count != 0, "Function 'tail' was passed empty argument {}");
+    LASSERT_ELIST(a);
 
     /* If error checking successful */
     /* Taking first argument */
@@ -258,7 +258,7 @@ lval* builtin_join(lval* a) {
 lval* builtin_cons(lval* a) {
   /* Check input for error */
     LASSERT(a, a->count == 2, "Function 'cons' was passsed more/less than two arguments. ");
-    LASSERT(a, a->cell[1]->type == LVAL_QEXPR, "The second argument should be a Q-Expression(LIST).");
+    LASSERT(a, a->cell[1]->type == LVAL_QEXPR, "The second argument should be a Q-Expression.");
     LASSERT(a, a->cell[0]->type == LVAL_NUM, "The first argument must be a simple value and not a symbol or expression. ");
 
     /*Creating new lvals and assigning vals */
@@ -290,7 +290,7 @@ lval* builtin_len(lval* a) {
 lval* builtin_init(lval* a) {
     LASSERT(a, a->count == 1, "Function was passed more than 1 argument. ");
     LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "Function 'init' was passed wrong type of argument i.e Not Quoted Expression");
-    LASSERT(a, a->cell[0]->count != 0, "Function 'init' was passed empty argument {}");
+    LASSERT_ELIST(a);
 
     lval* val = lval_qexpr();
     lval* val2 = lval_pop(a, 0);
