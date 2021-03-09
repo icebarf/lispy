@@ -21,7 +21,6 @@ I have also provided compiled binaries for ~~windows~~ and linux as well.
 - Implemented Variables
 - Updated Macros
 - Updated input method
-> Note
 
 **Version `early-0.6`**
 - Added Quoted Expressions
@@ -203,7 +202,7 @@ Returns the q-expression with last element removed from it:
 **var**
 
 You can declare variables using this function, this function can also alias pre existing functions present in lisp.
-Although only until the value of defined by the user is replaced with another value. The variables in this lisp are immutable.
+Although only until the value of variable defined by the user is replaced with another value. The variables in this lisp are immutable.
 
 Takes a quoted expression list as variable name. And a S-expression as value
 
