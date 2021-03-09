@@ -2,3 +2,5 @@ byolisp_a.exe
 byolisp_a
 test.c
 test
+auth.c
+auth
