@@ -1,5 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "mpc.h"
-#include <strings.h>
+#include <string.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -239,7 +240,7 @@ void lval_print_expr(lval* v, char open, char close) {
 void lval_print(lval* v) {
     switch(v->type) {
         case LVAL_FUN: printf("<function>");                        break;
-        case LVAL_NUM: printf("%lf", v->num);                       break;
+        case LVAL_NUM: printf("%.5lf", v->num);                     break;
         case LVAL_ERR: printf("Lisp error: %s", v->err);            break;
         case LVAL_SYM: printf("%s", v->sym);                        break;
         case LVAL_SEXPR: lval_print_expr(v, '(', ')');              break;
@@ -748,6 +749,9 @@ int main(int argc, char** argv) {
         /* Trying to parse the input */
         mpc_result_t r;
         if (mpc_parse("<stdin>", input, Byolisp, &r)) {
+            if(strstr(input, "exit")) {
+                break;
+            }
             lval* x = lval_eval(e, lval_read(r.output));
             lval_println(x);
             lval_del(x);
@@ -760,7 +764,7 @@ int main(int argc, char** argv) {
     
         free(input);
     
-    }  
+    } 
 
     lenv_del(e);
     mpc_cleanup(6, Number, Symbol, Sexpr, Qexpr, Expr, Byolisp);
