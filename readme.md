@@ -17,7 +17,7 @@ I have also provided compiled binaries for ~~windows~~ and linux as well.
 
 ## Changelog (Begun since version early-0.4)
 
-**Version `early-0.8**
+**Version `early-0.8`**
 - Implemented User Defined Functions
 
 **Version `early-0.7`**
@@ -43,30 +43,7 @@ I have also provided compiled binaries for ~~windows~~ and linux as well.
 - Improved code readability
 - Some cleanup and minor changes
 
-### Current Progress
-
-- Get mathematical input in polish notation
-- Has error handling
-
-**Can perform the following mathematical opeartions:**
-- Addition
-- Subtraction
-- Multiplication
-- Division & remainder(modulus)
-- Power
-- Min/Max
-
-**Quoted Expression functions:**
-- list
-- head
-- tail
-- join
-- eval
-- cons
-- len
-- init
-
-## Compile Instructions
+### Compile Instructions
 
 **Pre-requisites**
 > must have any C compiler e.g GNU/GCC, Clang
@@ -160,9 +137,6 @@ To return the `max` of two or more numbers entered:
 
 ## Functions
 
-
-### Quoted Expressions:
-
 **List**
 
 Returns a quoted expression/list of normal numbers:
@@ -232,6 +206,8 @@ Takes a quoted expression list as variable name. And a S-expression as value
 > Note: add, sub are builtin keywords/functions in this lisp.
 
 ## User Defined Functions
+
+**def**
 
 You can define your own functions using the **\\** (lambda) keyword.
 
