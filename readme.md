@@ -17,6 +17,9 @@ I have also provided compiled binaries for ~~windows~~ and linux as well.
 
 ## Changelog (Begun since version early-0.4)
 
+**Version `early-0.8**
+- Implemented User Defined Functions
+
 **Version `early-0.7`**
 - Implemented Variables
 - Updated Macros
@@ -199,7 +202,8 @@ Returns the q-expression with last element removed from it:
 ```>>> init {3 3 5 6 7}```
 
 ## Variables
-**var**
+
+**def**
 
 You can declare variables using this function, this function can also alias pre existing functions present in lisp.
 Although only until the value of variable defined by the user is replaced with another value. The variables in this lisp are immutable.
@@ -208,26 +212,54 @@ Takes a quoted expression list as variable name. And a S-expression as value
 
 **Normal usage:**
 
-``` >>> (var {num1} 10)
+``` >>> (def {num1} 10)
 
->>> (var {num1 num2} 69 420)
+>>> (def {num1 num2} 69 420)
 
 >>> (add num1 num2)
 ```
 **Function aliasing:**
 
-```>>> var {jodo} add
+```>>> (def {jodo} add)
 
->>> jodo 45 60
+>>> (jodo 45 60)
 
->>> var {ghatao} -
+>>> (def {ghatao} sub)
 
->>> ghatao 60 59
+>>> (ghatao 60 59)
 ```
 
-### Goals
+> Note: add, sub are builtin keywords/functions in this lisp.
 
-- Learn C
-- Learning how a language is made
-- Learning to write good code
-- Complete this project.
+## User Defined Functions
+
+You can define your own functions using the **\\** (lambda) keyword.
+
+It takes two arguments. A variable list and function body in form of Q-Expressions `{}`
+
+Here are some examples.
+
+Defining a function that first multiplies both arguments and then adds the result to first argument
+```
+>>> (\ {num1 num2} {+ num1 (* num1 num2)})
+```
+
+But here is the catch. This function does not have a name. We can easily use the def keyword to input a name of function and then call the function with that name.
+
+```
+>>> (def {add-mul} (\ {num1 num2} {+ num1 (* num1 num2)})) 
+```
+
+and now we can call it using the following syntax by supplying both function arguments.
+
+```
+>>> (add-mul 420 69)
+```
+
+There are more examples to these functions. But since I am lazy af I don't plan to add it and Just gonna push this readme and the changes to Github.
+
+> There won't be any releases. You can compile the lisp on your own machine to try out.
+
+If any of you guys would like to write proper docs and can help in testing this lisp with interesting things. Feel free to contact me.
+
+Contact info can be found on [Sysgrammer's Contact Page](https://sysgrammer.github.io/about/)
