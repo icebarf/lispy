@@ -1058,7 +1058,7 @@ int main(int argc, char** argv) {
     Number, Symbol, Sexpr, Qexpr, Expr, Byolisp);
 
     /* version info */
-    puts("Byolisp version early-0.8");
+    puts("Byolisp version early-0.9");
     puts("Press CTRL + C");
 
     lenv* e = lenv_new();

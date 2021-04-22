@@ -16,6 +16,10 @@ I have also provided compiled binaries for ~~windows~~ and linux as well.
 > linux binaries are compiled on x64 architecture
 
 ## Changelog (Begun since version early-0.4)
+**Version `early-0.9`**
+- Implemented if conditional
+- Implemented '>', '<', '<=', '>='
+- Implemented '==', '!='
 
 **Version `early-0.8`**
 - Implemented User Defined Functions
@@ -207,9 +211,9 @@ Takes a quoted expression list as variable name. And a S-expression as value
 
 ## User Defined Functions
 
-**def**
+**\**
 
-You can define your own functions using the **\\** (lambda) keyword.
+You can define your own functions using the **\** (lambda) keyword.
 
 It takes two arguments. A variable list and function body in form of Q-Expressions `{}`
 
@@ -233,6 +237,50 @@ and now we can call it using the following syntax by supplying both function arg
 ```
 
 There are more examples to these functions. But since I am lazy af I don't plan to add it and Just gonna push this readme and the changes to Github.
+
+## Conditionals
+
+> Note: 0.00000 means false and 1.00000 means true. Basically 0(false) and 1(true) 
+
+**Greater Than: '>'**
+```
+>>> (> 10 5)
+```
+
+**Lesser Than: '<'**
+```
+>>> (< 69 420)
+```
+
+**Greater than or equal to: '<='**
+```
+>>> (<= 13 13)
+
+>>> (<= 13 14)
+```
+
+**Lesser than or equal to: '>='**
+```
+>>> (>= 15 12)
+```
+
+**if**
+```
+>>> def {x y} (100 100)
+>>> (if (== x y) {+ x y} {* x 0})
+```
+
+**Comparison: '=='**
+```
+>>> (== 100 100)
+```
+
+**Comparison: '!='**
+```
+>>> (!= 100 120)
+```
+
+## End of readme
 
 > There won't be any releases. You can compile the lisp on your own machine to try out.
 
