@@ -1,5 +1,0 @@
-; fun.bsf used to define functions
-
-(def {fun} (\ {args body} {def (head args) (\ (tail args) body)}))
-
-; call fun by importing it using: import "fun.bsf"
