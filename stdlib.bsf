@@ -1,0 +1,173 @@
+; This is the standard library for Byolisp_a.
+; It contains all the functions that provide exta functionality for it.
+; Byolisp_a can function without this standard library
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                                                                                                                                                   
+
+
+;;;;;;;;;;;;;;;     ;;          ;;      ;;;;         ;;         ;;;;;;      ;;;;;;;;;;;;;       ;;          ;;;;;;;;        ;;;;         ;;         ;;;;;;;;;;
+;;                  ;;          ;;      ;; ;;        ;;       ;;;;                ;;            ;;       ;;;;     ;;;;      ;; ;;        ;;       ;;;;;
+;;                  ;;          ;;      ;;  ;;       ;;     ;;;;                  ;;            ;;      ;;;;       ;;;;     ;;  ;;       ;;     ;;;;
+;;                  ;;          ;;      ;;   ;;      ;;     ;;                    ;;            ;;     ;;;           ;;;    ;;   ;;      ;;       ;;;  
+;;;;;;;;            ;;          ;;      ;;    ;;     ;;     ;;                    ;;            ;;     ;;             ;;    ;;    ;;     ;;         ;;;;;;
+;;                  ;;          ;;      ;;     ;;    ;;     ;;                    ;;            ;;     ;;             ;;    ;;     ;;    ;;           ;;;;;;;;;;
+;;                  ;;          ;;      ;;      ;;   ;;     ;;                    ;;            ;;     ;;             ;;    ;;      ;;   ;;                 ;;;;
+;;                  ;;          ;;      ;;       ;;  ;;      ;;;                  ;;            ;;     ;;;           ;;;    ;;       ;;  ;;               ;;;;;;
+;;                  ;;          ;;      ;;        ;; ;;       ;;;;                ;;            ;;      ;;;;       ;;;;     ;;        ;; ;;             ;;;;
+;;                  ;;;;;;;;;;;;;;      ;;         ;;;;         ;;;;;;;           ;;            ;;         ;;;;;;;;;        ;;         ;;;;        ;;;;;;
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Atoms
+(def {nil} {})
+(def {false} 0)
+(def {true} 1)
+
+; Function define
+(def {fun} (\ {f b} {
+    def (head f) (\ (tail f) b)
+}))
+
+; Unpack List for functions
+(fun {unpack f l} {
+    eval (join (list f) l)
+})
+
+; Pack List for functions
+(fun {pack f & xs} {f xs})
+
+; Curried and Uncurried calling
+(def {curry} unpack)
+(def {uncurry} pack)
+
+; Performing several things in a sequence
+(fun {do & l} {
+    if (== l nil)
+    {nil}
+    {last l}
+})
+
+; Open a new scope
+(fun {let b} {
+    ((\ {_} b) ())
+})
+
+; Logical function
+(fun {not x }   {- 1 x})
+(fun {or x y}   {+ x y})
+(fun {and x y}  {* x y})
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;
+; MISCALLENEOUS functions
+;
+
+(fun {flip f a b} {f b a})
+(fun {ghost & xs} {eval xs})
+(fun {comp f g x} {f (g x)})
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;
+; LIST functions
+;
+
+; Get First, Second, Third item in list
+(fun {fst l} {eval (head l) })
+(fun {snd l} {eval (head (tail l))  })
+(fun {trd l} {eval (head (tail (tail l)))   })
+
+; Fetch Nth item in list
+(fun {item n l} {
+    if (== n 0)
+    {fst l}
+    {item (- n 1) (tail l)}
+})
+
+; Get Last item of list
+(fun {item l} {item (- (len l) 1) l})
+
+; Take n items from list
+(fun {take n l} {
+    if (== n 0)
+        {nil}
+        {join (head l) (take (- n 1) (tail l))}
+})
+
+; Drop n items from list
+(fun {drop n l} {
+    if (== n 0)
+        {l}
+        {drop (- n l) (tail l)}
+})
+
+; Split list at n
+(fun {split n l} {list (take n l) (drop n l)})
+
+; Find element in list
+(fun {elem x l} {
+    if (== l nil)
+        {false}
+        {if (== x (fst l)) {true} {elem x (tail l)}}
+})
+
+; Apply function to list (similar to loop) (on each element)
+(fun {map f l} {
+    if (== l nil)
+        {nil}
+        {join (list (f (fst l))) (map f (tail l))}
+})
+
+; Filter list, Applies condition to List
+(fun {filter f l} {
+    if (== l nil)
+        {nil}
+        {join (if (f (fst l)) {head l} {nil}) (filter f (tail l))}
+})
+
+; Fold left
+(fun {fold f z l} {
+    if (== l nil)
+        {z}
+        {foldl f(f z (fst l)) (tail l)}
+})
+
+(fun {sum l} {foldl + 0 l})
+(fun {product l} {foldl * 1 l})
+
+; Select (similar to C switch statements)
+
+(def {otherwise} true)
+
+(fun {select & cs} {
+    if (== cs nil)
+        {error "No Selection Found"}
+        {if (fst (fst cs)) {snd (fst cs)} {unpack select (tail cs)}}
+})
+
+; Print day of month suffix
+(fun {month-day-suffix i} {
+    select
+        {(== i 0) "st"}
+        {(== i 1) "nd"}
+        {(== i 3) "rd"}
+        {otherwise "th"}
+})
+
+(fun {case x & cs} {
+    if (== cs nil)
+        {error "No Case Found"}
+        {if (== x (fst (fst cs))) {snd (fst cs)} {
+            unpack case (join (list x) (tail cs))}}
+})
+
+; Fibonacci
+(fun {fib n} {
+    { (== n 0) 0}
+    { (== n 1) 1}
+    { otherwise (+ (fib (- n 1)) (fib (- n 2))) }
+})

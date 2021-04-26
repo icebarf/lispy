@@ -16,6 +16,13 @@ I have also provided compiled binaries for ~~windows~~ and linux as well.
 > linux binaries are compiled on x64 architecture
 
 ## Changelog (Begun since version early-0.4)
+
+### Version 1.0
+- Load function
+- Strings
+- Comments
+- print and error functions
+
 **Version `early-0.9`**
 - Implemented if conditional
 - Implemented '>', '<', '<=', '>='
@@ -279,6 +286,32 @@ There are more examples to these functions. But since I am lazy af I don't plan 
 ```
 >>> (!= 100 120)
 ```
+
+## Print, Error and load
+
+**Printing lines and variables etc**
+```
+>>> (println "Hello, World!")
+>>> (println (+ 2 3))
+>>> (println (head {4 5 6 string text}))
+```
+**Returning error to users**
+```
+>>> (error "Your error here")
+```
+
+**Importing source code files aka scripts**
+__In interpreter__
+```
+>>> load "stdlib.bsf"
+```
+Above command loads the Byolisp_a standard library into the current interpreter session (environment)
+
+__Using CLI Arguments__
+```
+$ ./byolisp_a your-code-file.bsf
+```
+Above command runs the code present in a `your-code-file.bsf` file like any other normal interpreter.
 
 ## End of readme
 
