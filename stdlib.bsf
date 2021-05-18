@@ -89,7 +89,7 @@
 })
 
 ; Get Last item of list
-(fun {item l} {item (- (len l) 1) l})
+(fun {last l} {item (- (len l) 1) l})
 
 ; Take n items from list
 (fun {take n l} {
@@ -102,7 +102,7 @@
 (fun {drop n l} {
     if (== n 0)
         {l}
-        {drop (- n l) (tail l)}
+        {drop (- n 1) (tail l)}
 })
 
 ; Split list at n

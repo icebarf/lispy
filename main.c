@@ -1215,8 +1215,8 @@ int main(int argc, char** argv) {
     lenv_add_builtins(e);
     if (argc == 1) {
         /* version info */
-        puts("Byolisp version 1.0");
-        puts("Press CTRL + C");
+        puts("Lispy version 1.0.2");
+        puts("Press CTRL + C to exit");
         
         while(1) {
 
