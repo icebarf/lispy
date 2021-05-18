@@ -4,8 +4,6 @@ LINKS= -ledit -lm
 LINKS_WIN= -lm
 STDLIB_PATH=/usr/bin
 
-all: install
-
 ### Instructions for windows users																	  ###
 #																										#
 # In the following command:																				#
@@ -14,6 +12,9 @@ all: install
 # Replace $(LINKS) with $(LINKS_WIN) and remove remaining two commands starting with chmod and mv		#
 #																										#
 ###																									  ###
+
+all:
+    $(CC) $(CFLAGS) main.c mpc.c $(LINKS) -o lispy
 
 install: main.c mpc.c mpc.h
 	clear && $(CC) $(CFLAGS) main.c mpc.c $(LINKS) -o lispy
