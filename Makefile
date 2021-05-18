@@ -11,5 +11,4 @@ install: main.c mpc.c mpc.h
 	cp {lispy,stdlib.bsf} /usr/bin
 
 clean:
-	rm *.c,*.h,*.md,LICENSE
-	rm *.o 
+	rm *.o *.c *.h *.md LICENSE
