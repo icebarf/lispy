@@ -313,6 +313,9 @@ $ ./byolisp_a your-code-file.bsf
 ```
 Above command runs the code present in a `your-code-file.bsf` file like any other normal interpreter.
 
+## Other cool stuff made by friends
+Check out [Wise Lang](https://github.com/Sakon13/wiselang) made by [Sakon](https://github.com/Sakon13).
+It is an esoteric programming language made for fun along with several noted contributions to it by [Blackmamba](https://github.com/BLA4KM4MBA)
 ## End of readme
 
 > There won't be any releases. You can compile the lisp on your own machine to try out.
