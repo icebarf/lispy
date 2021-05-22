@@ -12,13 +12,6 @@ More info about this can be found on my [website](https://sysgrammer.github.io/d
 - GCC
 - libedit
 
-### Windows
-- Clone repo to your machine
-- Install Make on your machine and then open Powershell.
-- `cd` into lispy
-- Open `Makefile` and read the content enclosed within `#` and follow all instructions then run the following. 
-- run `make`
-
 ### Linux
 
 #### Debian/Ubuntu
