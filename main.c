@@ -18,6 +18,7 @@ void add_history(char* unused) {}
 #else
 /* For Linux */
 #include <editline/readline.h>
+#include <histedit.h>
 #endif
 
 /* Parser Declaration */
@@ -332,7 +333,7 @@ void lval_print(lval* v) {
                 putchar(' '); lval_print(v->body); putchar(')');
             }                        
             break;
-        case LVAL_NUM: printf("%.5lf", v->num);                     break;
+        case LVAL_NUM: printf("%.2lf", v->num);                     break;
         case LVAL_ERR: printf("Lisp error: %s", v->err);            break;
         case LVAL_SYM: printf("%s", v->sym);                        break;
         case LVAL_SEXPR: lval_print_expr(v, '(', ')');              break;
@@ -689,7 +690,7 @@ lval* builtin_op(lenv* e, lval* a, char* op) {
 
         if (strcmp(op, "min") == 0) { x->num = fmin(x->num, y->num); }
     
-        if (strcmp(op, "max") == 0) { x->num = fmin(x->num, y->num); }
+        if (strcmp(op, "max") == 0) { x->num = fmax(x->num, y->num); }
 
         /* Deleting element as finished with it now */
         lval_del(y);

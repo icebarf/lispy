@@ -3,14 +3,14 @@
 
 Lispy is a lisp implementation which was invented by Daniel holden [in his book BuildYourOwnLisp](http://buildyourownlisp.com/). It is a dynamically typed interpreted language.
 
-More info about this can be found on my [website](https://sysgrammer.github.io/docs/lispy_docs.html).
+More info about this can be found on my [website](https://sysgrammer.github.io/docs/).
 
 ## Installation and compilation
 
 ### Depenencies
 - Make
 - GCC
-- libedit
+- Editline
 
 ### Linux
 
@@ -19,14 +19,15 @@ If you are on Debian/Ubuntu or any other distribution, you need to make a change
 
 - Make sure libedit is installed on your machine
 - Open main.c in your favorite editor.
-- Go to line 20. Press enter and type the follow and then save and exit
+- Go to line 21. Replace the histedit.h line with the following and then save and exit
 
 To type:
 ```c
 #include <editline/history.h>
 ```
 
-#### Any other distro or Ubuntu/Debian
+#### Normal steps
+
 - Install make on your machine
 - `git clone https://github.com/sysgrammer/lispy.git`
 - `cd lispy`
@@ -38,7 +39,7 @@ Optional:
 
 ## Documentation and Syntax
 
-Documentation and a guide to lispy can be found [here](https://sysgrammer.github.io/docs/lispy_docs.html)
+Documentation and a guide to lispy can be found [here](https://sysgrammer.github.io/docs/)
 
 
 ## Other cool stuff made by friends

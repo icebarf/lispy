@@ -145,22 +145,22 @@
 
 (fun {select & cs} {
     if (== cs nil)
-        {error "No Selection Found"}
+        {error No Selection Found}
         {if (fst (fst cs)) {snd (fst cs)} {unpack select (tail cs)}}
 })
 
 ; Print day of month suffix
 (fun {month-day-suffix i} {
     select
-        {(== i 0) "st"}
-        {(== i 1) "nd"}
-        {(== i 3) "rd"}
-        {otherwise "th"}
+        {(== i 0) st}
+        {(== i 1) nd}
+        {(== i 3) rd}
+        {otherwise th}
 })
 
 (fun {case x & cs} {
     if (== cs nil)
-        {error "No Case Found"}
+        {error No Case Found}
         {if (== x (fst (fst cs))) {snd (fst cs)} {
             unpack case (join (list x) (tail cs))}}
 })
@@ -171,3 +171,4 @@
     { (== n 1) 1}
     { otherwise (+ (fib (- n 1)) (fib (- n 2))) }
 })
+
