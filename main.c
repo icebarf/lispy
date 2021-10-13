@@ -316,7 +316,7 @@ void lval_print_str(lval* v) {
     /* Pass it through the escape function */
     escaped = mpcf_escape(escaped);
     /* Print it between " characters */
-    printf("\"%s\"", escaped);
+    printf("%s", escaped);
     /* free the copied string */
     free(escaped);
 }
